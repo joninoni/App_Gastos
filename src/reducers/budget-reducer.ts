@@ -1,15 +1,15 @@
-type BudgetActions = 
+export type BudgetActions = 
     {type : "add-budget",payload:{ budget:number }}
 
-type BudgetState = {
+export  type BudgetState = {
     budget : number
 }
 
-const initialState : BudgetState= {
+export const initialState : BudgetState= {
     budget : 0
 }
 
-const budgetReducer = (
+export const budgetReducer = (
     state : BudgetState = initialState,
     action : BudgetActions
 ) =>{
@@ -19,6 +19,8 @@ const budgetReducer = (
             budget : action.payload.budget
         }
     }
+
+    return state
 }
 
 export default budgetReducer
