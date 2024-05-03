@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react"
+import { useBudget } from "../hooks/useBudget"
 
 const BudgetForm = () => {
+
+    const {dispatch} = useBudget()
 
     const [budget,setBudget] = useState(0)
 
@@ -13,8 +16,17 @@ const BudgetForm = () => {
         return isNaN(budget) || budget <=0
     },[budget])
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        //guardo el budget que es el estado en el reducer
+        dispatch({type:"add-budget",payload:{budget}})
+    }
+
     return (
-        <form className=" space-y-5">
+        <form
+            className=" space-y-5"
+            onSubmit={handleSubmit}
+        >
             <div className=" space-y-5 flex flex-col">
 
                 <label
