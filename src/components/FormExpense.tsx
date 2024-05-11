@@ -1,6 +1,32 @@
+import { useState,ChangeEvent} from "react"
 import { categories } from "../data/categories"
+import { DraftExpense } from "../types"
 
 const FormExpense = () => {
+
+    const [expense,setExpense] = useState<DraftExpense>({
+        expenseName: '',
+        amount: 0,
+        category: '',
+        date: ""
+    })
+
+    const handleChange = (e : ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+        const {value,name} = e.target
+        const isFieldAmount = ["amount"].includes(name)
+        setExpense({
+            ...expense,
+            [name] : isFieldAmount ? +value : value
+        })
+    }
+
+    const handleChangeDate = (value : string) => {
+        setExpense({
+            ...expense,
+            date:value
+        })
+    }
+
     return (
         <form className=" space-y-5">
             <label className="uppercase text-center border-b-4 border-blue-500 text-2xl p-3 block">
@@ -20,6 +46,8 @@ const FormExpense = () => {
                     className="bg-slate-100 p-2"
                     placeholder="Nombre del gasto"
                     name="expenseName"
+                    value={expense.expenseName}
+                    onChange={handleChange}
                 />
             </div>
 
@@ -36,6 +64,8 @@ const FormExpense = () => {
                     className="bg-slate-100 p-2"
                     placeholder="Cantidad del gasto"
                     name="amount"
+                    value={expense.amount}
+                    onChange={handleChange}
                 />
             </div>
 
@@ -50,6 +80,8 @@ const FormExpense = () => {
                     id="category"
                     className="bg-slate-100 p-2"
                     name="category"
+                    value={expense.category}
+                    onChange={handleChange}
                 >
                     <option disabled>--Selecione</option>
                     {categories.map( category => (
@@ -75,6 +107,8 @@ const FormExpense = () => {
                     id="fecha"
                     name="fecha"
                     className="bg-slate-100 p-2"
+                    value={expense.date}
+                    onChange={e => handleChangeDate(e.target.value)}
                 />
             </div>
             
