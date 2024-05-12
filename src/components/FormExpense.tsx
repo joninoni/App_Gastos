@@ -1,6 +1,7 @@
-import { useState,ChangeEvent} from "react"
+import { useState,ChangeEvent,FormEvent} from "react"
 import { categories } from "../data/categories"
 import { DraftExpense } from "../types"
+import ErrorMesssage from "./ErrorMesssage"
 
 const FormExpense = () => {
 
@@ -10,6 +11,8 @@ const FormExpense = () => {
         category: '',
         date: ""
     })
+
+    const [error,setError] = useState("")
 
     const handleChange = (e : ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const {value,name} = e.target
@@ -27,11 +30,25 @@ const FormExpense = () => {
         })
     }
 
+    //valida el formulario
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        //validar los campos del formulario
+        if(Object.values(expense).includes("") || Object.values(expense).includes(0) || Number(expense.expenseName)){
+            setError("Hay campos vacios o el gasto es un numero")
+        }
+    }
+
     return (
-        <form className=" space-y-5">
-            <label className="uppercase text-center border-b-4 border-blue-500 text-2xl p-3 block">
+        <form
+            className=" space-y-5"
+            onSubmit={handleSubmit}
+        >
+            <legend className="uppercase text-center border-b-4 border-blue-500 text-2xl p-3">
                 Nuevo Gasto
-            </label>
+            </legend>
+
+            {error && <ErrorMesssage>{error}</ErrorMesssage>}
 
             <div className="flex flex-col gap-2">
                 <label
@@ -114,7 +131,7 @@ const FormExpense = () => {
             
             <input
                 type="submit"
-                className="bg-blue-600 w-full p-2 cursor-pointer text-white uppercase font-bold rounded-lg"
+                className="bg-blue-600 w-full p-2 cursor-pointer text-white uppercase font-bold rounded-lg "
                 value="Registrar gasto"
             />
         </form>
