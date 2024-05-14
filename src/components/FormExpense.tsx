@@ -2,8 +2,11 @@ import { useState,ChangeEvent,FormEvent} from "react"
 import { categories } from "../data/categories"
 import { DraftExpense } from "../types"
 import ErrorMesssage from "./ErrorMesssage"
+import { useBudget } from "../hooks/useBudget"
 
 const FormExpense = () => {
+
+    const {dispatch} = useBudget()
 
     const [expense,setExpense] = useState<DraftExpense>({
         expenseName: '',
@@ -36,7 +39,19 @@ const FormExpense = () => {
         //validar los campos del formulario
         if(Object.values(expense).includes("") || Object.values(expense).includes(0) || Number(expense.expenseName)){
             setError("Hay campos vacios o el gasto es un numero")
+            return
         }
+        //agregamos el gasto
+        dispatch({type:"add-expense",payload:{expense}})
+        //reiniciamos el formulario
+        setExpense(
+            {
+                expenseName: '',
+                amount: 0,
+                category: '',
+                date: ""
+            }
+        )
     }
 
     return (
