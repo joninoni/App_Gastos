@@ -9,13 +9,13 @@ export type BudgetActions =
 export  type BudgetState = {
     budget : number
     modal : boolean
-    expense : DraftExpense[]
+    expenses : Expense[]
 }
 
 export const initialState : BudgetState= {
     budget : 0,
     modal : false,
-    expense : []
+    expenses : []
 }
 
 const createId = (draftExpense : DraftExpense) :Expense => {
@@ -55,7 +55,7 @@ export const budgetReducer = (
         const id = createId(action.payload.expense)
         return{
             ...state,
-            expense : [...state.expense,id],
+            expenses : [...state.expenses,id],
             modal : false,
         }
     }
