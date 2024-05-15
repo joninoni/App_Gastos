@@ -11,7 +11,7 @@ const FormExpense = () => {
     const [expense,setExpense] = useState<DraftExpense>({
         expenseName: '',
         amount: 0,
-        category: '',
+        category: '1',
         date: ""
     })
 
@@ -37,8 +37,8 @@ const FormExpense = () => {
     const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         //validar los campos del formulario
-        if(Object.values(expense).includes("") || Object.values(expense).includes(0) || Number(expense.expenseName)){
-            setError("Hay campos vacios o el gasto es un numero")
+        if(Object.values(expense).includes("") || Object.values(expense).includes(0) || Number(expense.expenseName) || expense.amount <=0){
+            setError("Hay campos vacios, o el campo cantidad es negativo o el campo gasto es un numero")
             return
         }
         //agregamos el gasto
