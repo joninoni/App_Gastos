@@ -1,9 +1,9 @@
+import { useBudget } from "../hooks/useBudget"
 import AmountDisplay from "./AmountDisplay"
 import {SwipeableList,SwipeableListItem,LeadingActions,TrailingActions,SwipeAction} from "react-swipeable-list"
 import "react-swipeable-list/dist/styles.css"
 import { categories } from "../data/categories"
 import { Expense } from "../types"
-import { useBudget } from "../hooks/useBudget"
 
 
 type ExpenseDetailsProps = {
@@ -17,7 +17,7 @@ const ExpenseDetails = ({expense} : ExpenseDetailsProps) => {
 
     const leadingActions = () => (
         <LeadingActions>
-            <SwipeAction onClick={() => {}}>
+            <SwipeAction onClick={ () => dispatch({type:"get-expense-by-id",payload:{id :expense.id}})}>
                 Editar
             </SwipeAction>
         </LeadingActions>

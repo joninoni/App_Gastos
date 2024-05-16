@@ -1,4 +1,4 @@
-import { useState,ChangeEvent,FormEvent} from "react"
+import { useState,ChangeEvent,FormEvent, useEffect} from "react"
 import { categories } from "../data/categories"
 import { DraftExpense } from "../types"
 import ErrorMesssage from "./ErrorMesssage"
@@ -6,7 +6,7 @@ import { useBudget } from "../hooks/useBudget"
 
 const FormExpense = () => {
 
-    const {dispatch} = useBudget()
+    const {state,dispatch} = useBudget()
 
     const [expense,setExpense] = useState<DraftExpense>({
         expenseName: '',
@@ -16,6 +16,14 @@ const FormExpense = () => {
     })
 
     const [error,setError] = useState("")
+
+    useEffect( ()=> {
+        if(state.editingId.length > 0){
+            const editingExpense = state.expenses.filter( currentExpense => currentExpense.id === state.editingId)[0]
+            setExpense(editingExpense)
+        }
+    },[state.editingId,state.expenses])
+    
 
     const handleChange = (e : ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const {value,name} = e.target
