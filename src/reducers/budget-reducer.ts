@@ -23,7 +23,7 @@ export const initialState : BudgetState= {
     editingId : ""
 }
 
-const createId = (draftExpense : DraftExpense) :Expense => {
+const expense = (draftExpense : DraftExpense) :Expense => {
     return {
         ...draftExpense,
         id : crypto.randomUUID()
@@ -58,10 +58,10 @@ export const budgetReducer = (
     }
 
     if(action.type === "add-expense"){
-        const id = createId(action.payload.expense)
+        const createExpense= expense(action.payload.expense)
         return{
             ...state,
-            expenses : [...state.expenses,id],
+            expenses : [...state.expenses,createExpense],
             modal : false,
         }
     }

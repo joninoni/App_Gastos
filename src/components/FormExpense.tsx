@@ -68,6 +68,8 @@ const FormExpense = () => {
         )
     }
 
+    const typeAction = state.editingId.length > 0
+    
     return (
         <form
             className=" space-y-5"
@@ -161,7 +163,7 @@ const FormExpense = () => {
             <input
                 type="submit"
                 className="bg-blue-600 w-full p-2 cursor-pointer text-white uppercase font-bold rounded-lg "
-                value="Registrar gasto"
+                value={typeAction ? "Editar gasto" : "Registrar gasto"}
             />
         </form>
     )
