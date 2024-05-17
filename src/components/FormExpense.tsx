@@ -49,8 +49,14 @@ const FormExpense = () => {
             setError("Hay campos vacios, o el campo cantidad es negativo o el campo gasto es un numero")
             return
         }
-        //agregamos el gasto
-        dispatch({type:"add-expense",payload:{expense}})
+        //agregamos el gasto o lo actualizamos
+        if(state.editingId){
+            dispatch({type:"edit-expense",payload:{ expense:{id:state.editingId,...expense} }})
+        }
+        else{
+            dispatch({type:"add-expense",payload:{expense}})
+        }
+       
         //reiniciamos el formulario
         setExpense(
             {
