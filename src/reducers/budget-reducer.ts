@@ -9,6 +9,16 @@ export type BudgetActions =
     {type : "get-expense-by-id",payload:{id : Expense["id"]}} |
     {type : "edit-expense",payload:{expense : Expense}}
 
+    const initialBudget = () : number => {
+        const localStorageBudget = localStorage.getItem("budget")
+        return localStorageBudget ? +localStorageBudget : 0
+    }
+    
+    const localStorageExpenses = () : Expense[] => {    
+        const localStorageExpenses = localStorage.getItem("expenses")
+        return localStorageExpenses && localStorageExpenses !== "undefined" ? JSON.parse(localStorageExpenses) : []
+    }
+
 export  type BudgetState = {
     budget : number
     modal : boolean
@@ -17,9 +27,9 @@ export  type BudgetState = {
 }
 
 export const initialState : BudgetState= {
-    budget : 0,
+    budget : initialBudget(),
     modal : false,
-    expenses : [],
+    expenses : localStorageExpenses(),
     editingId : ""
 }
 
@@ -87,6 +97,7 @@ export const budgetReducer = (
             ...state,
             expenses : updeteExpense,
             modal : false,
+            editingId : "",
         }
     }
 
