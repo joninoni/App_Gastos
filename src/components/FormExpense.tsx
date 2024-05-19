@@ -1,4 +1,4 @@
-import { useState,ChangeEvent,FormEvent, useEffect, useMemo} from "react"
+import { useState,ChangeEvent,FormEvent, useEffect,} from "react"
 import { categories } from "../data/categories"
 import { DraftExpense } from "../types"
 import ErrorMesssage from "./ErrorMesssage"
@@ -73,6 +73,8 @@ const FormExpense = () => {
                 date: ""
             }
         )
+        //reinicio la cantidad previa
+        setPreviousAmount(0)
     }
 
     const typeAction = state.editingId.length > 0
