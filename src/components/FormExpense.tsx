@@ -1,4 +1,4 @@
-import { useState,ChangeEvent,FormEvent, useEffect} from "react"
+import { useState,ChangeEvent,FormEvent, useEffect, useMemo} from "react"
 import { categories } from "../data/categories"
 import { DraftExpense } from "../types"
 import ErrorMesssage from "./ErrorMesssage"
@@ -6,7 +6,7 @@ import { useBudget } from "../hooks/useBudget"
 
 const FormExpense = () => {
 
-    const {state,dispatch} = useBudget()
+    const {state,dispatch,remainingBudget} = useBudget()
 
     const [expense,setExpense] = useState<DraftExpense>({
         expenseName: '',
@@ -17,10 +17,13 @@ const FormExpense = () => {
 
     const [error,setError] = useState("")
 
+    const [previousAmount,setPreviousAmount] = useState(0)//almacena la cantidad del gasto a editar
+
     useEffect( ()=> {
         if(state.editingId.length > 0){
             const editingExpense = state.expenses.filter( currentExpense => currentExpense.id === state.editingId)[0]
-            setExpense(editingExpense)
+            setExpense(editingExpense)//llena los campos con la informacion para editar
+            setPreviousAmount(editingExpense.amount)
         }
     },[state.editingId,state.expenses])
     
@@ -49,6 +52,11 @@ const FormExpense = () => {
             setError("Hay campos vacios, o el campo cantidad es negativo o el campo gasto es un numero")
             return
         }
+        //nos aseguramos de no sobrepasar el presupuesto inicial
+        if( (expense.amount - previousAmount ) > remainingBudget){
+            setError("No se puede sobrepasar el presupuesto inicial")
+            return
+        }
         //agregamos el gasto o lo actualizamos
         if(state.editingId){
             dispatch({type:"edit-expense",payload:{ expense:{id:state.editingId,...expense} }})
@@ -56,7 +64,6 @@ const FormExpense = () => {
         else{
             dispatch({type:"add-expense",payload:{expense}})
         }
-       
         //reiniciamos el formulario
         setExpense(
             {
