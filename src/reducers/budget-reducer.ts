@@ -101,7 +101,7 @@ export const budgetReducer = (
             ...state,
             expenses : updeteExpense,
             modal : false,
-            editingId : "",
+            editingId : ""
         }
     }
 
@@ -109,7 +109,8 @@ export const budgetReducer = (
         return{
             ...state,
             budget : 0,
-            expenses : []
+            expenses : [],
+            currentCategory : "",
         }
     }
 

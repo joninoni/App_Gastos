@@ -18,6 +18,7 @@ export const BudgetProvider = ({children} : BudgetProviderProps) => {
 
     const [state,dispatch] = useReducer(budgetReducer,initialState)
 
+    
     const totalExpenses = useMemo( ()=> state.expenses.reduce( (acc,el) => el.amount + acc ,0),[state.expenses])
 
     const remainingBudget =  state.budget - totalExpenses 

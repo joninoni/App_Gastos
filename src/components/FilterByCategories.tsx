@@ -7,8 +7,7 @@ const FilterByCategories = () => {
     const {dispatch} = useBudget()
 
     const handleChange = ( e: ChangeEvent<HTMLSelectElement>) => {
-      
-        dispatch({type:"filter-by-category",payload:{ id : e.target.value }})
+        dispatch({type:"filter-by-category",payload:{ id : e.target.value }})  
     }
 
     return (
