@@ -42,7 +42,7 @@ const ExpenseDetails = ({expense} : ExpenseDetailsProps) => {
             >
                 <div className="bg-white shadow-lg p-10 w-full border border-gray-200 flex gap-5 items-center">
                     <div>
-                        <img className=" w-20" src={`../../public/img/icono_${categoryInfo.icon}.svg`} alt="icono de categoria"/>
+                        <img className=" w-20" src={`../../public/icono_${categoryInfo.icon}.svg`} alt="icono de categoria"/>
                     </div>
                     <div className="flex-1 space-y-2">
                         <p className="text-sm font-bold uppercase text-slate-500">
